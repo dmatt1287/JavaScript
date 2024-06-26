@@ -1,40 +1,68 @@
+//variables for the choices
 const choices = ["rock", "paper", "scissors"];
 
+
+//function to randomly generate rock,paper,scissor choices.
 function getComputerChoice() {
     const choice = choices[Math.floor(Math.random() * choices.length)];
     return choice;
+    
+}
+//function for user choice.
+function getHumanChoice() {
+    let userChoice = prompt("choose: rock, paper, scissors?").toLowerCase(); //prompt the user and store in variable userChoice.
+    console.log(userChoice);
+    return userChoice;
+    
 }
 
 
-function checkWinner(playerSelection, computerSelection) {
-    if (playerSelection == computerSelection) {
-        return "Tie";
-    }
-    else if(
-        (playerSelection == "rock" && computerSelection == "scissors") ||
-        (playerSelection == "scissors" && computerSelection == "paper") ||
-        (playerSelection == "paper" && computerSelection == "rock")){
-        return "Player"
-    }
-        else {
-        return "Computer";
-    }
-}
+let humanScore = 0;
+let computerScore = 0;
 
-function playRound(playerSlection, computerSelection) {
-    const result = checkWinner(playerSlection, computerSelection);
-    if (result == "Tie") {
-        return "It's a Tie!"
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice === computerChoice) {
+        return console.log("Tie");
     }
-    else if (result == "Player") {
-        return `You win! ${playerSlection} beats ${computerSelection}`;
+    else if ((humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper")) {
+        humanScore++;
+        return console.log(`you win! ${humanChoice} beats ${computerChoice} your score is ${humanScore}`);
+        
+        
     }
     else {
-        return `You lose! ${computerSelection} beats ${playerSlection}`;
+        computerScore++;
+        return console.log(`You lose! ${computerChoice} beats ${humanChoice} computer score is ${computerScore}`);
+        
     }
+}
+function playGame() {
+
+    for (let i = 0; i < 5; i++) {
+        console.log(`Round ${i + 1}`)
+        const userInput = getHumanChoice();
+        const compChoice = getComputerChoice();
+
+        playRound(userInput, compChoice);
+
+        console.log("User Score: ", humanScore)
+        console.log("Computer Score: ", computerScore)
+    }
+    if (humanScore > computerScore) {
+        console.log("Congratulations! You won the whole game");
+    }
+    else {
+        console.log("You lost the game. Refresh to start again");
+    }
+
 }
 
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+
+const computerChoice = getComputerChoice();
+const humanChoice = getHumanChoice();
+
+
+playGame();
